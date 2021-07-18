@@ -15,7 +15,7 @@ const DateInputCustom = forwardRef<HTMLSpanElement, ICustomDateInput>(({ value, 
             { value }
         </span>
         <span className="date-due-icon input">
-            <img alt="calendar" src="./calendar.svg" />
+            <img width={ 21 } alt="calendar" src="./calendar.svg" />
         </span>
     </div>
 ));
