@@ -1,0 +1,119 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+$checkbox-width: 1.25em !default;
+$checkbox-small-radius: 2px !default;
+$checkbox-radius: 2px !default;
+$checkbox-border-color: #3C4356 !default;
+$checkbox-background-color: hsl(0, 0%, 100%) !default;
+$checkbox-hover-border-color: hsl(0, 0%, 48%) !default;
+$checkbox-disabled-background-color: hsl(0, 0%, 96%) !default;
+
+.checkbox-outer {
+    &.is-small {
+        font-size: .8em;
+        
+        .checkbox-inner {
+            border-radius: 2px;
+        }
+    }
+
+    &.is-large {
+        font-size: 1.3em;
+    }
+}
+
+.checkbox {
+    display: inline-block;
+    position: relative;
+    outline: 0;
+    width: $checkbox-width;
+    height: $checkbox-width;
+    vertical-align: middle;
+
+    $checkbox: &;
+    
+    &-inner {
+        position: relative;
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        border-radius: $checkbox-radius;
+        background-color: $checkbox-background-color;
+        border: 1px solid $checkbox-border-color;
+        @include transition(background-color 0.25s);
+    }
+
+    &-input {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+
+        &:hover:not(:checked):not(:disabled) {
+            + #{$checkbox}-inner {
+                border-color: $checkbox-hover-border-color;
+            }
+        }
+
+        &:checked {
+            + #{$checkbox}-inner {
+                border-color: $color-primary;
+                background-color: $color-white;
+            }
+
+            + * + #{$checkbox}-check {
+                color: $color-text-primary;
+            }
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+
+            &:not(:checked) + #{$checkbox}-inner {
+                background-color: $checkbox-disabled-background-color;
+                opacity: .8;
+            }
+
+            &:checked {
+                + #{$checkbox}-inner {
+                    opacity: .4;
+                }
+            }
+        }
+    }
+
+    &-check {
+        position: absolute;
+        width: 80%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        color: transparent;
+        @include transform(translate(-50%, -50%));
+        @include transition(color 0.25s);
+        stroke-width: 3;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+    }
+
+    &-label {
+        cursor: pointer;
+        margin-left: .5em;
+        vertical-align: middle;
+    }
+
+    &.is-circle {
+        #{$checkbox}-inner {
+            border-radius: 50%;
+        }
+    }
+}

@@ -1,0 +1,247 @@
+@import '~react-datepicker/dist/react-datepicker.css';
+@import './variables.scss';
+@import './mixins.scss';
+@import './functions.scss';
+
+$container-max-width: 1400px;
+$container-border-color: #000000;
+
+$task-item-padding-small: .75rem;
+$task-item-padding: 1.5rem;
+$task-item-border-color: #7a7a7a;
+$task-item-border-radius: 4px;
+
+%task-item-box {
+    border: 1px solid $task-item-border-color;
+    padding: $task-item-padding-small;
+    border-radius: $task-item-border-radius;
+
+    @include breakpoint(tablet-up) {
+        padding: $task-item-padding;
+    }
+}
+
+.app {
+    max-width: $container-max-width;
+    margin: 1rem auto;
+    display: grid;
+
+    @include breakpoint(tablet-up) {
+        grid-template-columns: 4fr 6fr;
+        min-height: 650px;
+        margin: 3rem auto .5rem;
+        border: 1px solid $container-border-color;
+    }
+}
+
+.task {
+    &-box {
+        padding: 1rem;
+        
+        @include breakpoint(tablet-up) {
+            padding: 2rem;
+        }
+
+        @include breakpoint(small-desktop-up) {
+            padding: 2rem 4rem;
+        }
+    }
+
+    &-creation {
+        @include breakpoint(tablet-up) {
+            border-right: 1px solid $container-border-color;
+        }
+    }
+
+    &-list {
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        @include breakpoint(tablet-up) {
+            grid-row: unset;
+        }
+    }
+
+    &-title {
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 2rem;
+        
+        @include breakpoint(tablet-up) {
+            margin-bottom: 4rem;
+        }
+    }
+
+    &-form {
+        &-row {
+            @include breakpoint(large-tablet-up) {
+                display: flex;
+                justify-content: space-between;
+                
+                > div {
+                    display: inline-block;
+                    width: 45%;
+                }
+            }
+        }
+
+        &-submit {
+            margin-top: 3rem;
+        }
+    }
+
+    &-selection {
+        cursor: pointer;
+    }
+
+    &-item {
+        @extend %task-item-box;
+        
+        @include breakpoint(tablet-up) {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &-wrapper:not(:last-child) {
+            margin-bottom: 1.8rem;
+        }
+
+        .checkbox-label {
+            margin-left: 1.2rem;
+            line-height: 1.5;
+            font-size: 1.2rem;
+        }
+
+        &-action {
+            margin-top: 1rem;
+
+            @include breakpoint(tablet-up) {
+                margin-left: .5rem;
+                
+                .buttons {
+                    justify-content: flex-end;
+                }
+            }
+            
+            .button {
+                padding: .5rem 1.8rem;
+                height: 2.25rem;
+                border-radius: 4px;
+                width: 6.5rem;
+            }
+        }
+
+        &-detail {
+            @extend %task-item-box;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        &:not(:last-child) {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            border-bottom: 0;
+        }
+
+        &.is-selected {
+            background-color: #cccccc;
+        }
+
+        &.is-completed {
+            .checkbox-label {
+                text-decoration: line-through;
+                font-style: italic;
+            }
+        }
+    }
+
+    &-bulk-action {
+        padding: 1rem .5rem;
+        border-top: 1px solid $container-border-color;
+        background-color: lightgray;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        @include breakpoint(tablet-up) {
+            padding: 1.5rem 2rem;
+        }
+
+        .button {
+            width: 5rem;
+
+            @include breakpoint(tablet-up) {
+                width: 6.5rem;
+            }
+
+            &:not(:last-child) {
+                margin-left: .5rem;
+
+                @include breakpoint(tablet-up) {
+                    margin-left: 2.5rem;
+                }
+            }
+
+            &.is-success {
+                background-color: #2096F3;
+            }
+        }
+    }
+
+    &-empty {
+        text-align: center;
+        
+        h3 {
+            margin-top: .5rem;
+            font-weight: 500;
+        }
+    }
+
+    &-confirmation {
+        width: pxToRem(400);
+        min-height: pxToRem(100);
+        background-color: #ffffff;
+        border-radius: 4px;
+        margin-top: 14rem;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1.5rem;
+
+        h3 {
+            margin: 0 0 1.5rem;
+            font-weight: normal;
+        }
+
+        .buttons {
+            margin-top: 2rem;
+        }
+    }
+}
+
+.date-due {
+    $dateDue: &;
+    
+    &-custom {
+        width: 100%;
+    }
+        
+    &-input {
+        cursor: pointer;
+        display: flex;
+
+        .input:not(#{ $dateDue }-icon) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+
+    &-icon.input {
+        width: 3.25rem;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-left: 0;
+    }
+}

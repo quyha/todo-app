@@ -1,0 +1,171 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+@import '../../styles/inheritance.scss';
+
+$modal-z: 999 !default;
+
+$modal-background-color: rgba(10,10,10,.86) !default;
+
+$modal-content-width: 640px !default;
+$modal-content-margin-mobile: 1.25rem !default;
+$modal-content-spacing-mobile: 160px !default;
+$modal-content-spacing-tablet: 40px !default;
+
+$modal-close-dimensions: 40px !default;
+$modal-close-right: 1.25rem !default;
+$modal-close-top: 1.25rem !default;
+
+$modal-card-spacing: 40px !default;
+
+$modal-card-head-background-color: #0D2F72 !default;
+$modal-card-head-border-bottom: 1px solid transparent !default;
+$modal-card-head-padding: 1.25rem !default;
+$modal-card-head-radius: 6px !default;
+
+$modal-card-title-color: $color-white !default;
+$modal-card-title-line-height: 1 !default;
+$modal-card-title-size: 1.25rem !default;
+
+$modal-card-foot-radius: 6px !default;
+$modal-card-foot-border-top: 1px solid #DBDBDB !default;
+
+$modal-card-body-background-color: #F5F5F5 !default;
+$modal-card-body-padding: 1.25rem !default;
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include flexbox();
+    @include align-items(center);
+    @include flex-direction(column);
+    // @include justify-content(center);
+    overflow: hidden;
+    z-index: $modal-z;
+
+    &-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $modal-background-color;
+        @include animation(fade-in .3s);
+
+        &:hover {
+            cursor: zoom-out;
+            cursor: -moz-zoom-out;
+            cursor: -webkit-zoom-out;
+        }
+
+        &.no-cursor:hover {
+            cursor: default;
+        }
+    }
+
+    &-content, &-card {
+        margin: 0 $modal-content-margin-mobile;
+        max-height: calc(100vh - #{$modal-content-spacing-mobile});
+        overflow: auto;
+        position: relative;
+        width: 98%;
+        @include animation(fade-in .3s);
+
+        @include breakpoint(tablet-up) {
+            margin: 0 auto;
+            max-height: calc(100vh - #{$modal-content-spacing-tablet});
+            width: $modal-content-width;
+
+            &.is-large {
+                width: 80%;
+            }
+        }
+
+        @include breakpoint(large-desktop) {
+            width: 40%;
+            max-width: $container-max-width * .8;
+        }
+    }
+
+    &-close {
+        @extend .delete;
+        background: none;
+        width: $modal-close-dimensions;
+        height: $modal-close-dimensions;
+        position: fixed;
+        right: $modal-close-right;
+        top: $modal-close-top;
+    }
+
+    &-card {
+        @include flexbox();
+        @include flex-direction(column);
+        max-height: calc(100vh - #{$modal-card-spacing});
+        overflow: hidden;
+        -ms-overflow-y: visible;
+
+        &-head, &-foot {
+            position: relative;
+            @include align-items(center);
+            @include flexbox();
+            @include flex-shrink(0);
+            @include justify-content(flex-start);
+            background-color: $modal-card-head-background-color;
+            padding: $modal-card-head-padding;
+        }
+
+        &-head {
+            border-bottom: $modal-card-head-border-bottom;
+            border-top-left-radius: $modal-card-head-radius;
+            border-top-right-radius: $modal-card-head-radius;
+        }
+
+        &-foot {
+            border-top: $modal-card-foot-border-top;
+            border-bottom-left-radius: $modal-card-foot-radius;
+            border-bottom-right-radius: $modal-card-foot-radius;
+        }
+
+        &-body {
+            -webkit-overflow-scrolling: touch;
+            background-color: $modal-card-body-background-color;
+            @include flex-grow(1);
+            @include flex-shrink(1);
+            overflow: auto;
+            padding: $modal-card-body-padding;
+
+            &.is-rounded-corner {
+                border-bottom-left-radius: $modal-card-foot-radius;
+                border-bottom-right-radius: $modal-card-foot-radius;
+            }
+        }
+
+        &-title {
+            color: $modal-card-title-color;
+            font-size: $modal-card-title-size;
+            line-height: $modal-card-title-line-height;
+            @include flex-grow(1);
+            @include flex-shrink(0);
+            margin: 0;
+
+            ~ .delete {
+                border-radius: 3px;
+                width: 1.5rem;
+                height: 1.5rem;
+                background-color: #B60B00;
+
+                &:hover {
+                    background-color: rgba($color: #B60B00, $alpha: .8);
+                }
+            }
+        }
+    }
+}
+
+@include keyframes (fade-in) {
+    from {
+        opacity: 0;
+    }
+}

@@ -1,0 +1,54 @@
+@import '../../styles/inheritance.scss';
+@import '../../styles/mixins.scss';
+
+$delete-background-color: rgba(10, 10, 10, .2);
+$delete-hover-background-color: rgba(10, 10, 10, .3);
+$delete-active-background-color: rgba(10, 10, 10, .4);
+
+.delete {
+    @extend %delete;
+    background-color: $delete-background-color;
+
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        background-color: $color-white;
+        top: 50%;
+        left: 50%;
+        @include transform(translateX(-50%) translateY(-50%) rotate(45deg));
+        @include transform-origin(center center);
+    }
+    
+    &::before {
+        height: 2px;
+        width: 50%;
+    }
+
+    &::after {
+        height: 50%;
+        width: 2px;
+    }
+
+    &:hover, &:focus {
+        background-color: $delete-hover-background-color;
+    }
+
+    &:active {
+        background-color: $delete-active-background-color;
+    }
+
+    &.is-small {
+        width: 16px;
+        height: 16px;
+    }
+
+    &.is-medium {
+        width: 24px;
+        height: 24px;
+    }
+
+    &.is-large {
+        width: 32px;
+        height: 32px;
+    }
+}

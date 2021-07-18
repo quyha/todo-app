@@ -1,0 +1,94 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+$toast-zI: 999 !default;
+$toast-background-color: $color-white !default;
+$toast-border-radius: $border-radius-base !default;
+$toast-padding: 1.5rem !default;
+$toast-padding-closeable: 1.5rem 1.75rem 1.75rem 1.25rem !default;
+$toast-box-shadow: 0 1px 3px rgba(0, 0, 0, .2) !default;
+$toast-margin: 20px;
+
+.toast {
+    width: auto;
+    min-width: 300px;
+    max-width: 75%;
+    display: inline-block;
+    position: fixed;
+    z-index: $toast-zI;
+    background-color: $toast-background-color;
+    border-radius: $toast-border-radius;
+    padding: $toast-padding;
+    left: 50%;
+    @include transform(translateX(-50%));
+    @include box-shadow($toast-box-shadow);
+
+    &.is-closeable {
+        top: $toast-margin;
+        padding: $toast-padding-closeable;
+        @include animation(fadeIn .5s);
+    }
+
+    &:not(.is-closeable) {
+        @include animation(toast);
+    }
+
+    &-content {
+        p {
+            line-height: 1.2;
+            word-break: break-all;
+            margin: 0;
+        }
+    }
+
+    &.is-success {
+        background-color: #ECF7FE;
+        color: #0E72B4;
+    }
+
+    &.is-warning {
+        background-color: #FFFBEB;
+        color: #947600;
+    }
+
+    &.is-danger {
+        background-color: #FEECF0;
+        color: #CC0F35;
+    }
+
+    .delete {
+        position: absolute;
+        top: 6px;
+        right: 6px;
+    }
+}
+
+@include keyframes(fadeIn) {
+    from {
+        top: 0;
+        opacity: 0
+    }
+    to {
+        top: $toast-margin;
+        opacity: 1
+    }
+}
+
+@include keyframes(toast) {
+    0% {
+        top: -$toast-margin;
+        opacity: 1;
+    }
+    10% {
+        top: $toast-margin;
+        opacity: 1;
+    }
+    80% {
+        top: $toast-margin;
+        opacity: 1;
+    }
+    100% {
+        top: -$toast-margin;
+        opacity: 0;
+    }
+}
